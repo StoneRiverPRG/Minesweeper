@@ -1,5 +1,6 @@
 """ Minesweeper
-Todo: classed
+Todo:
+    classed
 """
 
 import sys
@@ -21,18 +22,19 @@ class GameState(Enum):
 
 
 class Mine():
-    """mine minesweeper program.
-    Todo:
+    """Mine minesweeper program.
+    Todo:a
     """
 
     def __init__(self):
         self.WIDTH = 30
         self.HEIGHT = 16
         self.MINEMAX = 99
-        self.MineCount = self.MINEMAX
+        self.MineCount = self.MINEMAX # Current number of Mine.
         self.MineMap = [[] for _ in range(self.HEIGHT)]
         self.GameState = GameState.GAME
         self.Turn = 0
+        self.MineList = [] # Coordinate of (row, col) list(tuples) of mine.
 
 
     def print_Map(self):
@@ -65,7 +67,15 @@ class Mine():
 
 
     def coordinate_to_rowcol(self, coord):
-        pass
+        # *check legal position
+        if not len(coord) == 2:
+            return
+        row, col = coord
+        if not (0 <= row < self.HEIGHT) and (0 <= col < self.WIDTH):
+            return
+
+        return (row, col)
+
 
 
     def main(self):
