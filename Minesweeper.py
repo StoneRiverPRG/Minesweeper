@@ -21,6 +21,15 @@ class GameState(Enum):
     BOMB = auto() # mine explosion(Game end)
 
 
+class CellState(Enum):
+    """CellState cell state
+    ?: unopen cell
+    .: open clear cell
+    1-8: number of mine in neighbor
+    S: Safety
+    M: Mine
+    """
+    Q = "?"
 class Mine():
     """Mine minesweeper program.
     Todo:a
@@ -35,6 +44,11 @@ class Mine():
         self.GameState = GameState.GAME
         self.Turn = 0
         self.MineList = [] # Coordinate of (row, col) list(tuples) of mine.
+        # trial code
+        self.actions = []
+        self.closed_list = []
+
+
 
 
     def print_Map(self):
@@ -48,7 +62,6 @@ class Mine():
     def input_data(self):
         # map initialize
         self.MineMap = [[] for _ in range(self.HEIGHT)]
-
         # map data input
         for i in range(self.HEIGHT):
             for cell in input().split():
@@ -58,6 +71,34 @@ class Mine():
 
     def update(self):
         pass
+
+
+    def find_safety_position(self):
+        number_cell = list("12345678")
+        for _y, line in enumerate(self.MineMap):
+            for _x, s in enumerate(line):
+                if s in number_cell:
+                    # check
+                    pass
+
+
+    def check_neigbor(self, coord):
+        _x, _y = coord
+        neighbor_cell_str = {}
+        neighbor = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
+
+        for cell in neighbor:
+            dx, dy = cell
+            x = _x + dx
+            y = _y + dy
+            if self.check_coordinate((x, y)) == None:
+                continue
+            s = self.MineMap[x][y]
+            if neighbor_cell_str.get(s) == None:
+                neighbor_cell_str[s] = 1
+            else:
+                neighbor_cell_str[s] += 1
+        return neighbor_cell_str
 
 
     def reveal_cell(self, coord):
@@ -92,6 +133,7 @@ class Mine():
         while self.GameState == GameState.GAME:
             self.input_data()
             self.update()
+            self.find_safety_position()
             self.print_Map()
             self.reveal_cell((20, 7))
             self.Turn += 1
