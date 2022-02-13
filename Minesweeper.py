@@ -66,15 +66,25 @@ class Mine():
 
 
 
-    def coordinate_to_rowcol(self, coord):
+    def check_coordinate(self, coord):
+        """check_coordinate (x, y)coordinate
+
+        Args:
+            coord (tuple): (x, y) coordinate
+
+        Returns:
+            tuple: (x, y) if check is True, else None
+        """
         # *check legal position
         if not len(coord) == 2:
             return
-        row, col = coord
-        if not (0 <= row < self.HEIGHT) and (0 <= col < self.WIDTH):
+        x, y = coord
+        if not ((0 <= x < self.WIDTH) and (0 <= y < self.HEIGHT)):
+            # ! if list index is out of range.
             return
 
-        return (row, col)
+        # *: order is x and y. not row and col.
+        return (x, y)
 
 
 
