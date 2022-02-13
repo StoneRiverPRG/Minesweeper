@@ -75,11 +75,18 @@ class Mine():
 
     def find_safety_position(self):
         number_cell = list("12345678")
+        neighbor = [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]
         for _y, line in enumerate(self.MineMap):
             for _x, s in enumerate(line):
                 if s in number_cell:
-                    # check
-                    pass
+                    str_dict = self.check_neigbor((_x, _y))
+                    if str_dict.get("?") == int(s):
+                        # find Mines.
+                        for n in neighbor:
+                            if self.MineMap[_x+n[0]][_y+n[1]] == "?":
+                                self.MineList.append(( _x+n[0], _y+n[1] ))
+        # Todo: Needs mine coordinate think
+
 
 
     def check_neigbor(self, coord):
@@ -103,6 +110,7 @@ class Mine():
 
     def reveal_cell(self, coord):
         #row, col = coordinate_to_rowcol(coord)
+        # TODO:
         print("20 7 15 10")
 
 

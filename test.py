@@ -42,3 +42,6 @@ print(d.get("?"))
 if not d.get("?") == None:
     d["?"] += 1
 print(d)
+
+if not None == int("1"):
+    print("Yes")
